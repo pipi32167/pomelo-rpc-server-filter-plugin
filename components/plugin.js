@@ -107,7 +107,7 @@ var Plugin = function(app, opts) {
     next();
   };
 
-  var Dispatcher = opts.Dispatcher;
+  var Dispatcher = opts.Dispatcher || app.require('node_modules/pomelo/node_modules/pomelo-rpc/lib/rpc-server/dispatcher.js');
   var __route = Dispatcher.prototype.route;
   Dispatcher.prototype.route = function(tracer, msg, cb) {
 
