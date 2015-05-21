@@ -20,8 +20,8 @@ app.configure(function() {
     next();
   });
 
-  app.rpcServerAfter(function(msg, next) {
-    logger.debug('rpc server after filter 1:', app.getServerId(), msg);
+  app.rpcServerAfter(function(msg, resp, next) {
+    logger.debug('rpc server after filter 1:', app.getServerId(), msg, resp);
     next();
   });
 
@@ -34,8 +34,8 @@ app.configure(function() {
     next();
   }
 
-  RpcServerFilter.prototype.after = function(msg, next) {
-    logger.debug('rpc server after filter 2:', app.getServerId(), msg);
+  RpcServerFilter.prototype.after = function(msg, resp, next) {
+    logger.debug('rpc server after filter 2:', app.getServerId(), msg, resp);
     next();
   }
 

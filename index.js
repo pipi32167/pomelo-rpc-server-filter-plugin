@@ -1,5 +1,5 @@
 'use strict';
 module.exports = {
-	components: __dirname + '/components/',
-	events: __dirname + '/events/'
+	components: __dirname + '/lib/components/',
+	events: __dirname + '/lib/events/'
 };

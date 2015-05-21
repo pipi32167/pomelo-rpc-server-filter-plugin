@@ -1,6 +1,6 @@
 {
 	"name": "pomelo-rpc-server-filter-plugin",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "The missing server side rpc filter.",
 	"main": "index.js",
 	"private": false,

@@ -1,0 +1,26 @@
+{
+  "development": {
+    "connector": [{
+      "id": "connector",
+      "host": "127.0.0.1",
+      "port": 3150
+    }],
+    "echo": [{
+      "id": "echo",
+      "host": "127.0.0.1",
+      "port": 3151
+    }]
+  },
+  "production": {
+    "connector": [{
+      "id": "connector",
+      "host": "127.0.0.1",
+      "port": 3150
+    }],
+    "echo": [{
+      "id": "echo",
+      "host": "127.0.0.1",
+      "port": 3151
+    }]
+  }
+}
