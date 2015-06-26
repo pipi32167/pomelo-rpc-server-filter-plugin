@@ -32,9 +32,9 @@ app.configure('production|development', 'echo', function() {
 		next();
 	});
 
-	app.rpcServerAfter(function(msg, resp, next) {
-		console.log('rpc server after filter 1:', app.getServerId(), msg, resp);
-		next();
+	app.rpcServerAfter(function(err, msg, resp, next) {
+		console.log('rpc server after filter 1:', app.getServerId(), err, msg, resp);
+		next(err);
 	});
 
 	var RpcServerFilter = function() {
@@ -46,9 +46,9 @@ app.configure('production|development', 'echo', function() {
 		next();
 	}
 
-	RpcServerFilter.prototype.after = function(msg, resp, next) {
-		console.log('rpc server after filter 2:', app.getServerId(), msg, resp);
-		next();
+	RpcServerFilter.prototype.after = function(err, msg, resp, next) {
+		console.log('rpc server after filter 2:', app.getServerId(), err, msg, resp);
+		next(err);
 	}
 
 	app.rpcServerFilter(new RpcServerFilter());

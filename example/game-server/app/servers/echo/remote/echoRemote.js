@@ -6,3 +6,7 @@ exp.echo = function(msg, cb) {
 
 	cb(null, msg);
 }
+
+exp.error = function(cb) {
+	throw new Error('test error');
+}
