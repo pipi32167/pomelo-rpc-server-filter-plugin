@@ -2,11 +2,21 @@
 
 var exp = module.exports;
 
-exp.echo = function(msg, cb) {
+exp.echo = function(msg, session, next) {
+	console.log(arguments);
 
-	cb(null, msg);
+	next(null, {
+		code: 0,
+		msg: msg.msg
+	});
 }
 
-exp.error = function(cb) {
+exp.error = function(msg, session, next) {
 	throw new Error('test error');
+}
+
+exp.error2 = function(msg, session, next) {
+	next(null, {
+		code: 0
+	});
 }

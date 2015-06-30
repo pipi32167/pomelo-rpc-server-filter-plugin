@@ -27,27 +27,47 @@ app.configure('production|development', 'echo', function() {
 	//  }
 	//}); 
 
-	app.rpcServerBefore(function(msg, next) {
-		console.log('rpc server before filter 1:', app.getServerId(), msg);
+	app.rpcServerBefore(function(msg, session, next) {
+		console.log('rpc server before filter 1:', app.getServerId(), msg, session);
 		next();
 	});
 
-	app.rpcServerAfter(function(err, msg, resp, next) {
-		console.log('rpc server after filter 1:', app.getServerId(), err, msg, resp);
+	app.rpcServerAfter(function(err, msg, resp, session, next) {
+		console.log('rpc server after filter 1:', app.getServerId(), err, msg, session, resp);
 		next(err);
+	});
+
+	app.rpcServerBefore(function(msg, session, next) {
+		if (msg.__route__ !== 'echo.echoRemote.error2') {
+			next();
+			return;
+		}
+		console.log('rpc server before filter 2:', app.getServerId(), msg, session);
+		next(new Error('error2.1'), {
+			code: 2
+		});
+	});
+
+	app.rpcServerAfter(function(err, msg, session, resp, next) {
+		if (msg.__route__ !== 'echo.echoRemote.error2') {
+			next(err);
+			return;
+		}
+		console.log('rpc server after filter 2:', app.getServerId(), err, msg, session, resp);
+		next(new Error('error2.2'));
 	});
 
 	var RpcServerFilter = function() {
 
 	}
 
-	RpcServerFilter.prototype.before = function(msg, next) {
-		console.log('rpc server before filter 2:', app.getServerId(), msg);
+	RpcServerFilter.prototype.before = function(msg, session, next) {
+		console.log('rpc server before filter 3:', app.getServerId(), msg, session);
 		next();
 	}
 
-	RpcServerFilter.prototype.after = function(err, msg, resp, next) {
-		console.log('rpc server after filter 2:', app.getServerId(), err, msg, resp);
+	RpcServerFilter.prototype.after = function(err, msg, resp, session, next) {
+		console.log('rpc server after filter 3:', app.getServerId(), err, msg, session, resp);
 		next(err);
 	}
 
@@ -55,6 +75,13 @@ app.configure('production|development', 'echo', function() {
 });
 // start app
 app.start();
+
+// app.set('errorHandler', function (err, msg, resp, session, cb) {
+// 	console.error('errorHandler', err, msg, resp, session, cb);
+// 	cb(null, resp || {
+// 		code: 100
+// 	});
+// })
 
 process.on('uncaughtException', function(err) {
 	console.error(' Caught exception: ' + err.stack);
